@@ -1,31 +1,25 @@
 <?php
-class Authenticator extends Handler
+class Authenticator extends BaseAuthenticator
 {
-  public function handle(...$args): bool
+  public function handle($args): bool
   {
     // Let the Authorizer check for the token
-    if ($token) {
-      // Uncipher Token
-      return parent::handle(...$args);
+    if ($args["token"]) {
+      // Decipher Token
+      // Send Token deciphered to Authorizer
+      return parent::handle($args);
     }
 
-    if ($req["errorIfExist"] && $this->emailExist($req["email"])) {
-      echo "error: Email already in use";
+    if (!$this->emailExist($args["email"])) {
+      echo "Error: Email not registered";
       return false;
     }
 
-    if (!$this->emailExist($req["email"])) {
-      echo "error: Email not registered";
+    if ($this->tooManyAttempts($args["email"])) {
+      echo "Error: Too many attempts";
       return false;
     }
-    return parent::handle($req);
-  }
 
-  private static function emailExist(string $email)
-  {
-  }
-
-  private static function checkCredentials(string $email, string $pwd)
-  {
+    return parent::handle($args);
   }
 }

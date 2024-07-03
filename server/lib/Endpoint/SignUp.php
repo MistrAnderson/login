@@ -1,5 +1,6 @@
 <?php
-class SignUp extends Service {
+class SignUp extends Service
+{
 
   const NEEDED_ARGS = ["email", "password"];
 
@@ -7,5 +8,13 @@ class SignUp extends Service {
   {
     // SignUp logic
     // Database call...
+  }
+
+  function genChainOfResponsibility(): Handler
+  {
+    $handler = new AuthenticatorSignUp();
+    $handler->setNext(new Authorizer());
+
+    return $handler;
   }
 }

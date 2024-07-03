@@ -42,7 +42,7 @@ abstract class Service
 
     $args = StdLib::genArgs(self::NEEDED_ARGS, $this);
 
-    if ($cor->handle(...$args)) {
+    if ($cor->handle($args)) {
       $this->endpointMethod();
     }
   }
