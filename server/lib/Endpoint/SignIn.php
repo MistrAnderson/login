@@ -5,7 +5,8 @@ class SignIn extends Service {
 
   function endpointMethod()
   {
-    // SignIn logic
-    // Database call...
+    // Should be signed in thanks to 
+    // the Authorizer
+    echo "you're signed in !";
   }
 }

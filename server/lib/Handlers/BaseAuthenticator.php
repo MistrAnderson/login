@@ -1,13 +1,6 @@
 <?php
 abstract class BaseAuthenticator extends Handler
 {
-  protected $db;
-
-  function __construct()
-  {
-    $this->db = new Database();
-  }
-
   protected function emailExist(string $email)
   {
     $filter = [
@@ -47,9 +40,9 @@ abstract class BaseAuthenticator extends Handler
     return false;
   }
 
-  protected function tooManyAttempts(string $email)
-  {
-    echo $email;
-    return false;
-  }
+  //protected function tooManyAttempts(string $email)
+  //{
+  //  echo $email;
+  //  return false;
+  //}
 }

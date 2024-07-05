@@ -5,8 +5,6 @@ class Authenticator extends BaseAuthenticator
   {
     // Let the Authorizer check for the token
     if ($args["token"]) {
-      // Decipher Token
-      // Send Token deciphered to Authorizer
       return parent::handle($args);
     }
 
@@ -15,10 +13,10 @@ class Authenticator extends BaseAuthenticator
       return false;
     }
 
-    if ($this->tooManyAttempts($args["email"])) {
-      echo "Error: Too many attempts";
-      return false;
-    }
+    //if ($this->tooManyAttempts($args["email"])) {
+    //  echo "Error: Too many attempts";
+    //  return false;
+    //}
 
     // Check if pwd is valid
     if (!$this->pwdMatch($args["email"], $args["pwd"])) {

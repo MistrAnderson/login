@@ -5,9 +5,6 @@ class ChangePwd extends Service {
 
   function endpointMethod()
   {
-    // ChangePwd logic
-    // Database call...
-
     $salt = bin2hex(random_bytes(16));
     $pwdHash = hash('sha512', $this->password.$salt);
 

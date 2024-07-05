@@ -2,6 +2,12 @@
 abstract class Handler
 {
   private $next;
+  protected $db;
+
+  function __construct()
+  {
+    $this->db = new Database();
+  }
 
   public function setNext(Handler $next)
   {
