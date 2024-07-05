@@ -4,6 +4,7 @@ abstract class Service
 
   const ALLOWED_ARGS = ["email", "password", "newPassword", "token"];
   const NEEDED_ARGS = [];
+  protected $db;  
 
   function __construct()
   {
@@ -28,6 +29,8 @@ abstract class Service
       }
     }
 
+    $this->db = new Database();
+
     // Only calls Trig if JSON data was sent
     static::Trig();
   }
@@ -35,10 +38,11 @@ abstract class Service
   private function Trig()
   {
     if (!StdLib::testNeededArgs(self::NEEDED_ARGS, $this)) {
+      echo "Not enough arguments";
       return;
     }
 
-    $cor = $this->genChainOfResponsibility();
+    $cor = static::genChainOfResponsibility();
 
     $args = StdLib::genArgs(self::NEEDED_ARGS, $this);
 
@@ -47,13 +51,15 @@ abstract class Service
     }
   }
 
-  abstract function endpointMethod();
-
-  function genChainOfResponsibility(): Handler
+  static function genChainOfResponsibility(): Handler
   {
     $handler = new Authenticator();
-    $handler->setNext(new Authorizer());
+    $authorizer = new Authorizer();
+
+    $handler->setNext($authorizer);
 
     return $handler;
   }
+
+  abstract function endpointMethod();
 }

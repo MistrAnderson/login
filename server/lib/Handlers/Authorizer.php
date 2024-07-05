@@ -1,8 +1,8 @@
 <?php
 class Authorizer extends Handler
 {
-  public function handle(string $request): bool
+  public function handle($args): bool 
   {
-    
+    return parent::handle($args);
   }
 }

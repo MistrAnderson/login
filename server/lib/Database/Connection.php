@@ -13,8 +13,11 @@ class Connection
         $file = "db.json";
       }
       $cred = SecuLib::getCredentials($file);
-      //TODO change db name
-      self::$instance = new PDO('mysql:host=localhost;dbname=' . $cred->dbName, $cred->login, $cred->password);
+      try {
+        self::$instance = new PDO('mysql:host=localhost;dbname=' . $cred->dbName, $cred->login, $cred->password);
+      } catch (Exception $e) {
+        echo $e;
+      }
     }
     return self::$instance;
   }

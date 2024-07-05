@@ -1,7 +1,7 @@
 <?php
 class Authenticator extends BaseAuthenticator
 {
-  public function handle($args): bool
+  public function handle($args) 
   {
     // Let the Authorizer check for the token
     if ($args["token"]) {
@@ -17,6 +17,12 @@ class Authenticator extends BaseAuthenticator
 
     if ($this->tooManyAttempts($args["email"])) {
       echo "Error: Too many attempts";
+      return false;
+    }
+
+    // Check if pwd is valid
+    if (!$this->pwdMatch($args["email"], $args["pwd"])) {
+      echo "Error: Wrong password"; 
       return false;
     }
 

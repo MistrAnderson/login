@@ -1,12 +1,19 @@
 <?php
 class SignOut extends Service {
 
-  const NEEDED_ARGS = ["token"];
+  // Should not require the email
+  const NEEDED_ARGS = ["email", "token"];
 
   function endpointMethod()
   {
-    // SignOut logic
-    // Database call...
+    $filter = [
+      "email" => [
+        "operator" => "=",
+        "value" => $this->email
+      ]
+    ];
+
+    $this->db->delete("tokens", $filter);
   }
 }
 

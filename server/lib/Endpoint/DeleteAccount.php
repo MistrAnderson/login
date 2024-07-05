@@ -5,8 +5,14 @@ class DeleteAccount extends Service {
 
   function endpointMethod()
   {
-    // DeleteAccount logic
-    // Database call...
+    $filter = [
+      "email" => [
+        "operator" => "=",
+        "value" => $this->email
+      ]
+    ];
+
+    $this->db->delete("accounts", $filter);
   }
 }
 

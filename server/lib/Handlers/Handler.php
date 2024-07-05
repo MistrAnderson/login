@@ -9,7 +9,7 @@ abstract class Handler
     return $next;
   }
 
-  public function handle($args): bool
+  public function handle($args) 
   {
     // If the handlers has no next handlers
     // it means the request went through all the CoR

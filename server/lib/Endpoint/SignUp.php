@@ -6,14 +6,24 @@ class SignUp extends Service
 
   function endpointMethod()
   {
-    // SignUp logic
-    // Database call...
+    $salt = bin2hex(random_bytes(16));
+    $hashedPwd = hash('sha512', $this->password.$salt);
+
+    $params = [
+      "email" => $this->email,
+      "pwd_hash" => $hashedPwd,
+      "salt" => $salt,
+    ];
+
+    $this->db->create("accounts", $params);
   }
 
-  function genChainOfResponsibility(): Handler
+  static function genChainOfResponsibility(): Handler
   {
     $handler = new AuthenticatorSignUp();
-    $handler->setNext(new Authorizer());
+    $authorizer = new Authorizer();
+
+    $handler->setNext($authorizer);
 
     return $handler;
   }
